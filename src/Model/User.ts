@@ -1,4 +1,6 @@
-export enum UserType {
+import {InvalidParameterError} from '../Errors/InvalidParameterError'
+
+export enum UserRole {
     NORMAL = "NORMAL",
     ADMIN = "ADMIN"
 }
@@ -10,7 +12,7 @@ export class User {
         private nickname: string,
         private email: string,
         private password: string,
-        private role: UserType
+        private role: UserRole
     ) {}
 
     getId(): string{
@@ -29,7 +31,22 @@ export class User {
         return this.email
     }
 
+    getPassword(): string{
+        return this.password
+    }
+
     getRole(): string{
         return this.role
     }
 }
+
+export const stringToUserRole = (input: string): UserRole => {
+    switch (input) {
+        case "NORMAL":
+            return UserRole.NORMAL;
+        case "ADMIN":
+            return UserRole.ADMIN;
+        default:
+            throw new InvalidParameterError("Invalid user role");
+    }
+};
