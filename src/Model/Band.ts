@@ -5,30 +5,30 @@ export class Band {
         private nickname: string,
         private description: string,
         private password: string,
-        private authorization: boolean
+        private authorization: number
     ) {}
 
-    public getId(): string{
+    getId(): string{
         return this.id
     }
 
-    private getName(): string{
+    getName(): string{
         return this.name
     }
 
-    private getNickname(): string{
+    getNickname(): string{
         return this.nickname
     }
 
-    private getDescription(): string{
+    getDescription(): string{
         return this.description
     }
 
-    private getPassword(): string{
+    getPassword(): string{
         return this.password
     }
 
-    private getAuthorization(): boolean{
+    getAuthorization(): number{
         return this.authorization
     }
 }

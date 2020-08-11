@@ -36,7 +36,7 @@ export class BandBusiness {
         const hashPassword = await this.hashManager.hash(password)
 
         await this.bandDatabase.createBand(
-            new Band(id, name, nickname, description, hashPassword, false)
+            new Band(id, name, nickname, description, hashPassword, 0)
         )
     }
 
@@ -54,5 +54,25 @@ export class BandBusiness {
         const result = await this.bandDatabase.getBands()
 
         return result
+    }
+
+    public async authorizeBand(token: string, bandId: string) {
+        if (!token) {
+            throw new UnauthorizedError("Missing access token")
+        }
+
+        const tokenData = this.authenticator.verifyToken(token)
+
+        if (tokenData.role !== UserRole.ADMIN) {
+            throw new UnauthorizedError("You must be an admin to use this endpoint")
+        }
+
+        const checkBand = await this.bandDatabase.getBandById(bandId)
+
+        if(checkBand?.getAuthorization() === 1){
+            throw new GenericError("Band already approved")
+        }
+
+        await this.bandDatabase.approveBand(bandId)
     }
 }
