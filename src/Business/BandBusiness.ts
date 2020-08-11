@@ -4,8 +4,10 @@ import { Authenticator } from '../Services/Authenticator'
 import { IdGenerator } from '../Services/IdGenerator'
 import { Band } from '../Model/Band'
 import { InvalidParameterError } from '../Errors/InvalidParameterError'
+import { UnauthorizedError } from '../Errors/UnauthorizedError'
 import { GenericError } from '../Errors/GenericError'
 import { NotFoundError } from '../Errors/NotFoundError'
+import {UserRole} from '../Model/User'
 
 export class BandBusiness {
     constructor(
@@ -36,5 +38,21 @@ export class BandBusiness {
         await this.bandDatabase.createBand(
             new Band(id, name, nickname, description, hashPassword, false)
         )
+    }
+
+    public async getBands(token: string) {
+        if(!token) {
+            throw new UnauthorizedError("Missing access token")
+        }
+
+        const tokenData = this.authenticator.verifyToken(token)
+
+        if(tokenData.role !== UserRole.ADMIN){
+            throw new UnauthorizedError("You must be an admin to use this endpoint")
+        }
+
+        const result = await this.bandDatabase.getBands()
+
+        return result
     }
 }
