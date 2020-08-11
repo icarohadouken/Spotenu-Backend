@@ -23,4 +23,12 @@ export class BandDatabase extends BaseDatabase {
             .insert(band)
             .into(this.tableName)
     }
+
+    public async getBands(): Promise<Band[]> {
+        const result = await this.getConnection()
+            .select('name', 'nickname', 'authorization')
+            .from(this.tableName)
+
+        return result
+    }
 }

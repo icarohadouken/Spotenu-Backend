@@ -34,4 +34,15 @@ export class BandController{
             res.status(err.errorCode || 400).send({message: err.message})
         }
     }
+
+    public async getBands(req: Request, res: Response) {
+        try{
+            const result = await BandController.BandBusiness.getBands(req.headers.authorization as string)
+
+            res.status(200).send(result)
+        }
+        catch(err){
+            res.status(err.errorCode || 400).send({message: err.message})
+        }
+    }
 }

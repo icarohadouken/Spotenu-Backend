@@ -10,8 +10,8 @@ export class UserDatabase extends BaseDatabase {
             new User(
                 dbModel.id,
                 dbModel.name,
-                dbModel.email,
                 dbModel.nickname,
+                dbModel.email,
                 dbModel.password,
                 dbModel.role
             )

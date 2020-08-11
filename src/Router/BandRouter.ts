@@ -4,3 +4,4 @@ import express from 'express'
 export const bandRouter = express.Router()
 
 bandRouter.post("/signup", new BandController().signup)
+bandRouter.get("/", new BandController().getBands)
