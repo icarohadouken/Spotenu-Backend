@@ -24,6 +24,10 @@ export class Band {
         return this.description
     }
 
+    private getPassword(): string{
+        return this.password
+    }
+
     private getAuthorization(): boolean{
         return this.authorization
     }
