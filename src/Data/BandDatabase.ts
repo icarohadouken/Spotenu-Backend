@@ -26,9 +26,26 @@ export class BandDatabase extends BaseDatabase {
 
     public async getBands(): Promise<Band[]> {
         const result = await this.getConnection()
-            .select('name', 'nickname', 'authorization')
+            .select('id', 'name', 'nickname', 'authorization')
             .from(this.tableName)
 
         return result
+    }
+
+    public async getBandById(id: string): Promise<Band | undefined>{
+        const result = await this.getConnection()
+            .select('*')
+            .from(this.tableName)
+            .where({id})
+        return this.toModel(result[0])
+    }
+
+    public async approveBand(id: string): Promise<void> {
+        await this.getConnection()
+            .raw(`
+                UPDATE ${this.tableName}
+                SET authorization = true
+                where id = '${id}'
+            `)
     }
 }

@@ -5,3 +5,4 @@ export const bandRouter = express.Router()
 
 bandRouter.post("/signup", new BandController().signup)
 bandRouter.get("/", new BandController().getBands)
+bandRouter.put("/approve/", new BandController().approveBand)
