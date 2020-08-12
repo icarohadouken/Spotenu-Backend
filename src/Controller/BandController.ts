@@ -61,4 +61,18 @@ export class BandController{
             res.status(err.errorCode || 400).send({message: err.message})
         }
     }
+
+    public async login(req: Request, res: Response) {
+        try{
+            const result = await BandController.BandBusiness.login(
+                req.body.login as string,
+                req.body.password as string
+            )
+
+            res.status(200).send(result)
+        }
+        catch(err){
+            res.status(err.errorCode || 400).send({message: err.message})
+        }
+    }
 }
