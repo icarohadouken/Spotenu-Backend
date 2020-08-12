@@ -40,6 +40,15 @@ export class BandDatabase extends BaseDatabase {
         return this.toModel(result[0])
     }
 
+    public async getBandByNickname(nickname: string): Promise<Band | undefined> {
+        const result = await this.getConnection()
+            .select('*')
+            .from(this.tableName)
+            .where({nickname})
+
+        return this.toModel(result[0])
+    }
+
     public async approveBand(id: string): Promise<void> {
         await this.getConnection()
             .raw(`

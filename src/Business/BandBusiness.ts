@@ -75,4 +75,36 @@ export class BandBusiness {
 
         await this.bandDatabase.approveBand(bandId)
     }
+
+    public async login(
+        nickname: string,
+        password: string
+    ) {
+        if(!nickname || !password){
+            throw new InvalidParameterError("Missing input")
+        }
+
+        const band = await this.bandDatabase.getBandByNickname(nickname)
+
+        if(!band){
+            throw new NotFoundError("Band not found")
+        }
+
+        const isPasswordCorrect = await this.hashManager.compare(password, band.getPassword())
+
+        if(!isPasswordCorrect){
+            throw new InvalidParameterError("Invalid password")
+        }
+
+        if(band.getAuthorization() === 0){
+            throw new UnauthorizedError("Band need to be approved by an admin")
+        }
+
+        const accessToken = this.authenticator.generateTokenBand({
+            id: band.getId(),
+            authorization: band.getAuthorization()
+        })
+
+        return {accessToken}
+    }
 }

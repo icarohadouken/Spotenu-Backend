@@ -21,8 +21,7 @@ export class UserController {
                 req.body.name,
                 req.body.nickname,
                 req.body.email,
-                req.body.password,
-                req.body.role
+                req.body.password
             )
 
             res.status(200).send(result)
@@ -32,10 +31,29 @@ export class UserController {
         }
     }
 
+    public async signupAdmin(req: Request, res: Response) {
+        try{
+            const result = await UserController.UserBusiness.signupAdmin(
+                req.headers.authorization as string,
+                req.body.name,
+                req.body.nickname,
+                req.body.email,
+                req.body.password,
+            )
+
+            res.status(200).send({
+                message: "User created"
+            })
+        }
+        catch(err){
+            res.status(err.errorCode || 400).send({message: err.message})
+        }
+    }
+
     public async login(req: Request, res: Response) {
         try{
             const result = await UserController.UserBusiness.login(
-                req.body.email,
+                req.body.login,
                 req.body.password
             )
 
