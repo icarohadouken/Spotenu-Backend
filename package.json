@@ -7,7 +7,8 @@
     "start:dev": "ts-node-dev ./src/local.ts",
     "build": "tsc",
     "deploy": "sls deploy",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "offline": "sls offline"
   },
   "repository": {
     "type": "git",

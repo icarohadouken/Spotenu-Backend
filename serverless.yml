@@ -1,0 +1,32 @@
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-dotenv-plugin
+
+service: Spotenu
+
+provider:
+  name: aws
+  runtime: nodejs12.x 
+  stage: dev 
+  region: us-east-2 
+
+custom:
+  webpack:
+    webpackConfig: webpack.config.js
+    packager: "npm"
+    includeModules: true 
+  serverless-offline:
+    httpsProtocol: "dev-certs"
+    httpPort: 3006
+    stageVariables:
+      foo: "bar"
+
+
+functions:
+  app:
+    handler: src/lambda.handler
+    events: 
+      - http: ANY / 
+      - http: "ANY {proxy+}" 
+      - cors: true
