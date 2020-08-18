@@ -10,10 +10,11 @@ export class BandDatabase extends BaseDatabase {
             new Band(
                 dbModel.id,
                 dbModel.name,
-                dbModel.email,
                 dbModel.nickname,
+                dbModel.description,
                 dbModel.password,
-                dbModel.authorization
+                dbModel.authorization,
+                dbModel.email
             )
         );
     }
@@ -26,7 +27,7 @@ export class BandDatabase extends BaseDatabase {
 
     public async getBands(): Promise<Band[]> {
         const result = await this.getConnection()
-            .select('id', 'name', 'nickname', 'authorization')
+            .select('id', 'name', 'email', 'nickname', 'authorization')
             .from(this.tableName)
 
         return result
