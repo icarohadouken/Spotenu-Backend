@@ -21,9 +21,10 @@ export class BandBusiness {
         name: string,
         nickname: string,
         description: string,
-        password: string
+        password: string,
+        email: string
     ) {
-        if (!name || !nickname || !description || !password){
+        if (!name || !nickname || !description || !password || !email){
             throw new InvalidParameterError("Missing input")
         }
 
@@ -31,12 +32,16 @@ export class BandBusiness {
             throw new InvalidParameterError("Password must contain at least 6 characters")
         }
 
+        if(email.indexOf("@") === -1){
+            throw new InvalidParameterError("Invalid email")
+        }
+
         const id = this.idGenerator.generate()
 
         const hashPassword = await this.hashManager.hash(password)
 
         await this.bandDatabase.createBand(
-            new Band(id, name, nickname, description, hashPassword, 0)
+            new Band(id, name, nickname, description, hashPassword, 0, email)
         )
     }
 

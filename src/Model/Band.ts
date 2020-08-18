@@ -5,7 +5,8 @@ export class Band {
         private nickname: string,
         private description: string,
         private password: string,
-        private authorization: number
+        private authorization: number,
+        private email: string
     ) {}
 
     getId(): string{
@@ -30,5 +31,9 @@ export class Band {
 
     getAuthorization(): number{
         return this.authorization
+    }
+
+    getEmail(): string{
+        return this.email
     }
 }

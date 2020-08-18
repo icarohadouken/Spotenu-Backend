@@ -15,7 +15,6 @@ app.use(cors({origin: true}))
 app.use(express.json())
 
 
-
 const server = app.listen(process.env.PORT || 3006, () => {
     if (server) {
         const address = server.address() as AddressInfo
