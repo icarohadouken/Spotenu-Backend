@@ -109,7 +109,10 @@ export class UserBusiness {
             role: user.getRole()
         })
 
-        return { accessToken }
+        return {
+            token: accessToken,
+            role: user.getRole()
+        }
 
 
     }
