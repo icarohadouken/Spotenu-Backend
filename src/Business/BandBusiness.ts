@@ -61,6 +61,9 @@ export class BandBusiness {
         return result
     }
 
+
+    
+
     public async authorizeBand(token: string, bandId: string) {
         if (!token) {
             throw new UnauthorizedError("Missing access token")
