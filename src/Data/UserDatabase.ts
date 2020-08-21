@@ -41,4 +41,21 @@ export class UserDatabase extends BaseDatabase {
 
         return this.toModel(result[0])
     }
+
+    public async getUserById(id: string): Promise<User | undefined> {
+        const result = await this.getConnection()
+            .select("*")
+            .from(this.tableName)
+            .where({id})
+        return result[0]
+    }
+
+    public async changeNickName(id: string, newNickname: string): Promise<void>{
+        await this.getConnection()
+            .raw(`
+                UPDATE ${this.tableName}
+                SET nickname = '${newNickname}'
+                where id = '${id}'
+            `)
+    }
 }
